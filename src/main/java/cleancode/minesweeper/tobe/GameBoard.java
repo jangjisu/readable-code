@@ -3,12 +3,10 @@ package cleancode.minesweeper.tobe;
 import cleancode.minesweeper.tobe.cell.*;
 import cleancode.minesweeper.tobe.gamelevel.GameLevel;
 import cleancode.minesweeper.tobe.position.CellPosition;
+import cleancode.minesweeper.tobe.position.CellPositions;
 import cleancode.minesweeper.tobe.position.RelativePosition;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Stream;
 
 public class GameBoard {
     private final Cell[][] board;
@@ -58,10 +56,6 @@ public class GameBoard {
         return board[0].length;
     }
 
-    public String getSign(CellPosition cellPosition) {
-        return findCell(cellPosition).getSign();
-    }
-
     public Cell findCell(CellPosition cellPosition) {
         return board[cellPosition.getRowIndex()][cellPosition.getColIndex()];
     }
@@ -74,37 +68,47 @@ public class GameBoard {
             || cellPosition.isColIndexMoreThanOrEqual(colSize);
     }
 
+    public CellSnapshot getSnapshot(CellPosition cellPosition) {
+        Cell cell = findCell(cellPosition);
+        return cell.getSnapshot();
+    }
+
     public void initalizeGame() {
-        int rowSize = getRowSize();
-        int colSize = getColSize();
-        for (int row = 0; row < rowSize; row++) {
-            for (int col = 0; col < colSize; col++) {
-                this.board[row][col] = new EmptyCell();
+        CellPositions cellPositions = CellPositions.from(board);
+        initalizeEmptyCells(cellPositions);
+
+        List<CellPosition> landMinePositions = cellPositions.extractRandomPositions(landMineCount);
+        initalizeLandMineCells(landMinePositions);
+
+        List<CellPosition> numberPositionCandidates = cellPositions.subtract(landMinePositions);
+        initalizeNumberCells(numberPositionCandidates);
+
+    }
+
+    private void initalizeEmptyCells(CellPositions cellPositions) {
+        List<CellPosition> allPositions = cellPositions.getPosition();
+        for (CellPosition position : allPositions) {
+            updateCellAt(position, new EmptyCell());
+        }
+    }
+
+    private void initalizeLandMineCells(List<CellPosition> landminePositions) {
+        for (CellPosition position : landminePositions) {
+            updateCellAt(position, new LandmineCell());
+        }
+    }
+
+    private void initalizeNumberCells(List<CellPosition> numberPositionCandidates) {
+        for (CellPosition position : numberPositionCandidates) {
+            int count = countNearbyLandMines(position);
+            if (count != 0) {
+                updateCellAt(position, new NumberCell(count));
             }
         }
+    }
 
-        for (int i = 0; i < landMineCount; i++) {
-            int landmineCol = new Random().nextInt(colSize);
-            int landmineRow = new Random().nextInt(rowSize);
-            LandmineCell landmineCell = new LandmineCell();
-            board[landmineRow][landmineCol] = landmineCell;
-        }
-
-        for (int row = 0; row < rowSize; row++) {
-            for (int col = 0; col < colSize; col++) {
-                CellPosition cellPosition = CellPosition.of(row, col);
-                if (isLandMineCellAt(cellPosition)) {
-                    continue;
-                }
-
-                int count = countNearbyLandMines(cellPosition);
-                if(count == 0) {
-                    continue;
-                }
-                NumberCell numberCell = new NumberCell(count);
-                board[row][col] = numberCell;
-            }
-        }
+    private void updateCellAt(CellPosition position, Cell cell) {
+        board[position.getRowIndex()][position.getColIndex()] = cell;
     }
 
     private int countNearbyLandMines(CellPosition cellPosition) {
@@ -129,9 +133,9 @@ public class GameBoard {
     }
 
     public boolean isAllCellChecked() {
-        return Arrays.stream(board)
-                .flatMap(Arrays::stream)
-                .allMatch(Cell::isChecked);
+        Cells cells = Cells.from(board);
+
+        return cells.isAllChecked();
     }
 
     private boolean canMovePosition(CellPosition cellPosition, RelativePosition relativePosition) {
