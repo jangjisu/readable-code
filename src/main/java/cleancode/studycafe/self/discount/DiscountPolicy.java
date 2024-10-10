@@ -39,27 +39,27 @@ public enum DiscountPolicy {
     return (double) price * (100 - discountRate) / 100;
   }
 
-  private static int getDiscountRate(Pass pass) {
-    Duration passDuration = pass.getDuration();
-
-    return getExceedThreshholdDurations(passDuration).stream()
-      .mapToInt(DiscountPolicy::getDiscountRate)
-      .max()
-      .orElse(NONE.getDiscountRate());
-  }
-
-  private static List<DiscountPolicy> getExceedThreshholdDurations(Duration passDuration) {
-    return Arrays.stream(DiscountPolicy.values())
-      .filter(discount -> discount.getThresholdDuration().compareTo(passDuration) < 0)
-      .toList();
+  private Duration getThresholdDuration() {
+    return thresholdDuration;
   }
 
   private int getDiscountRate() {
     return discountRate;
   }
 
-  private Duration getThresholdDuration() {
-    return thresholdDuration;
+  private static int getDiscountRate(Pass pass) {
+    Duration passDuration = pass.getDuration();
+
+    return getExceedThresholdDurations(passDuration).stream()
+      .mapToInt(DiscountPolicy::getDiscountRate)
+      .max()
+      .orElse(NONE.getDiscountRate());
+  }
+
+  private static List<DiscountPolicy> getExceedThresholdDurations(Duration passDuration) {
+    return Arrays.stream(DiscountPolicy.values())
+      .filter(discount -> discount.getThresholdDuration().compareTo(passDuration) < 0)
+      .toList();
   }
 
 }

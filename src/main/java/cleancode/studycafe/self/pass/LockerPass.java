@@ -21,6 +21,10 @@ public enum LockerPass {
     this.price = price;
   }
 
+  public static boolean canUseLocker(Pass pass) {
+    return !getAvailableLockerPasses(pass).isEmpty();
+  }
+
   public static List<LockerPass> getAvailableLockerPasses(Pass pass) {
     return Stream.of(values())
       .filter(lockerPass -> lockerPass.getAvailablePassTypes().contains(pass))
@@ -34,19 +38,15 @@ public enum LockerPass {
       .orElseThrow(() -> new IllegalArgumentException("확인할 수 없는 셀입니다"));
   }
 
-  public static boolean canUseLocker(Pass pass) {
-    return !getAvailableLockerPasses(pass).isEmpty();
-  }
-
-  private List<Pass> getAvailablePassTypes() {
-    return availablePasses;
-  }
-
   public int getPrice() {
     return price;
   }
 
   public String display() {
     return String.format("%s - %d원", description, price);
+  }
+
+  private List<Pass> getAvailablePassTypes() {
+    return availablePasses;
   }
 }

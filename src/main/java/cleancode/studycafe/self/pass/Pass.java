@@ -40,6 +40,10 @@ public enum Pass {
     return passType;
   }
 
+  public int getPrice() {
+    return price;
+  }
+
   public static List<Pass> getStudyCafePasses(PassType selectedPassType) {
     return Stream.of(values())
       .filter(cafePass -> cafePass.getPassType().equals(selectedPassType))
@@ -52,10 +56,6 @@ public enum Pass {
 
   public Duration getDuration() {
     return duration;
-  }
-
-  public int getPrice() {
-    return price;
   }
 
   public String display() {
