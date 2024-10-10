@@ -1,6 +1,6 @@
-package cleancode.studycafe.self.model;
+package cleancode.studycafe.self.pass;
 
-public enum StudyCafePassType {
+public enum PassType {
 
     HOURLY("시간 단위 이용권"),
     WEEKLY("주 단위 이용권"),
@@ -8,7 +8,7 @@ public enum StudyCafePassType {
 
     private final String description;
 
-    StudyCafePassType(String description) {
+    PassType(String description) {
         this.description = description;
     }
 

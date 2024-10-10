@@ -1,22 +1,24 @@
 package cleancode.studycafe.self.model;
 
+import cleancode.studycafe.self.pass.PassType;
+
 public class StudyCafeLockerPass {
 
-    private final StudyCafePassType passType;
+    private final PassType passType;
     private final int duration;
     private final int price;
 
-    private StudyCafeLockerPass(StudyCafePassType passType, int duration, int price) {
+    private StudyCafeLockerPass(PassType passType, int duration, int price) {
         this.passType = passType;
         this.duration = duration;
         this.price = price;
     }
 
-    public static StudyCafeLockerPass of(StudyCafePassType passType, int duration, int price) {
+    public static StudyCafeLockerPass of(PassType passType, int duration, int price) {
         return new StudyCafeLockerPass(passType, duration, price);
     }
 
-    public StudyCafePassType getPassType() {
+    public PassType getPassType() {
         return passType;
     }
 
@@ -29,13 +31,13 @@ public class StudyCafeLockerPass {
     }
 
     public String display() {
-        if (passType == StudyCafePassType.HOURLY) {
+        if (passType == PassType.HOURLY) {
             return String.format("%s시간권 - %d원", duration, price);
         }
-        if (passType == StudyCafePassType.WEEKLY) {
+        if (passType == PassType.WEEKLY) {
             return String.format("%s주권 - %d원", duration, price);
         }
-        if (passType == StudyCafePassType.FIXED) {
+        if (passType == PassType.FIXED) {
             return String.format("%s주권 - %d원", duration, price);
         }
         return "";

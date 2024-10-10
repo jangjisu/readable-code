@@ -1,5 +1,7 @@
 package cleancode.studycafe.self.io;
 
+import cleancode.studycafe.self.pass.LockerPass;
+import cleancode.studycafe.self.pass.Pass;
 import cleancode.studycafe.self.model.StudyCafeLockerPass;
 import cleancode.studycafe.self.model.StudyCafePass;
 
@@ -10,13 +12,15 @@ public interface OutputHandler {
 
   void showAnnouncement();
 
-  void askPassTypeSelection();
+  void showPassTypeSelection();
 
-  void showPassListForSelection(List<StudyCafePass> passes);
+  void showPassListForSelection(List<Pass> passes);
 
-  void askLockerPass(StudyCafeLockerPass lockerPass);
+  void askLockerPass(LockerPass lockerPass);
 
-  void showPassOrderSummary(StudyCafePass selectedPass, StudyCafeLockerPass lockerPass);
+  void showPassOrderSummaryWithLocker(Pass selectedPass, LockerPass lockerPass, boolean isDiscountTarget);
+
+  void showPassOrderSummary(Pass selectedPass, boolean isDiscountTarget);
 
   void showSimpleMessage(String message);
 

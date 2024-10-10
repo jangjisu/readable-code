@@ -2,7 +2,7 @@ package cleancode.studycafe.self.io;
 
 import cleancode.studycafe.self.model.StudyCafeLockerPass;
 import cleancode.studycafe.self.model.StudyCafePass;
-import cleancode.studycafe.self.model.StudyCafePassType;
+import cleancode.studycafe.self.pass.PassType;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,12 +18,12 @@ public class StudyCafeFileHandler {
             List<StudyCafePass> studyCafePasses = new ArrayList<>();
             for (String line : lines) {
                 String[] values = line.split(",");
-                StudyCafePassType studyCafePassType = StudyCafePassType.valueOf(values[0]);
+                PassType passType = PassType.valueOf(values[0]);
                 int duration = Integer.parseInt(values[1]);
                 int price = Integer.parseInt(values[2]);
                 double discountRate = Double.parseDouble(values[3]);
 
-                StudyCafePass studyCafePass = StudyCafePass.of(studyCafePassType, duration, price, discountRate);
+                StudyCafePass studyCafePass = StudyCafePass.of(passType, duration, price, discountRate);
                 studyCafePasses.add(studyCafePass);
             }
 
@@ -39,11 +39,11 @@ public class StudyCafeFileHandler {
             List<StudyCafeLockerPass> lockerPasses = new ArrayList<>();
             for (String line : lines) {
                 String[] values = line.split(",");
-                StudyCafePassType studyCafePassType = StudyCafePassType.valueOf(values[0]);
+                PassType passType = PassType.valueOf(values[0]);
                 int duration = Integer.parseInt(values[1]);
                 int price = Integer.parseInt(values[2]);
 
-                StudyCafeLockerPass lockerPass = StudyCafeLockerPass.of(studyCafePassType, duration, price);
+                StudyCafeLockerPass lockerPass = StudyCafeLockerPass.of(passType, duration, price);
                 lockerPasses.add(lockerPass);
             }
 

@@ -1,14 +1,12 @@
 package cleancode.studycafe.self.io;
 
-import cleancode.studycafe.self.model.StudyCafePass;
-import cleancode.studycafe.self.model.StudyCafePassType;
-
-import java.util.List;
+import cleancode.studycafe.self.pass.Pass;
+import cleancode.studycafe.self.pass.PassType;
 
 public interface InputHandler {
-  StudyCafePassType getPassTypeSelectingUserAction();
+  PassType getPasstypeFromUser();
 
-  StudyCafePass getSelectPass(List<StudyCafePass> passes);
+  Pass getPassFromUser(PassType passType);
 
-  boolean isHourlyPassType();
+  boolean doesUserChooseLockerPass();
 }
