@@ -2,10 +2,11 @@ package cleancode.studycafe.self;
 
 import cleancode.studycafe.self.discount.DiscountPolicy;
 import cleancode.studycafe.self.exception.AppException;
-import cleancode.studycafe.self.io.*;
-import cleancode.studycafe.self.pass.PassType;
-import cleancode.studycafe.self.pass.Pass;
+import cleancode.studycafe.self.io.InputHandler;
+import cleancode.studycafe.self.io.OutputHandler;
 import cleancode.studycafe.self.pass.LockerPass;
+import cleancode.studycafe.self.pass.Pass;
+import cleancode.studycafe.self.pass.PassType;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class StudyCafePassMachine {
         }
       }
 
-      outputHandler.showPassOrderSummary(selectedPass, DiscountPolicy.getDiscountedPrice(selectedPass));
+      outputHandler.showPassOrderSummary(selectedPass, DiscountPolicy.canUseDiscount(selectedPass));
 
     } catch (AppException e) {
       outputHandler.showSimpleMessage(e.getMessage());

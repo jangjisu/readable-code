@@ -3,7 +3,8 @@ package cleancode.studycafe.self.pass;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static cleancode.studycafe.self.pass.Pass.*;
+import static cleancode.studycafe.self.pass.Pass.FIXED_12;
+import static cleancode.studycafe.self.pass.Pass.FIXED_4;
 
 public enum LockerPass {
   WEEK_4("4주권", List.of(FIXED_4), 10000),
@@ -43,5 +44,9 @@ public enum LockerPass {
 
   public int getPrice() {
     return price;
+  }
+
+  public String display() {
+    return String.format("%s - %d원", description, price);
   }
 }

@@ -4,11 +4,14 @@ import cleancode.studycafe.self.pass.Pass;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public enum DiscountPolicy {
   NONE("할인 없음", 0, Duration.ZERO),
-  TEN_PERCENT("10% 할인", 10, Duration.ofDays(7 * 2)),
-  FIFTEEN_PERCENT("15% 할인", 15, Duration.ofDays(7 * 4));
+  TEN_PERCENT("10% 할인", 10, Duration.ofDays(7L * 2)),
+  FIFTEEN_PERCENT("15% 할인", 15, Duration.ofDays(7L * 4));
 
   private final String description;
   private final int discountRate;
@@ -41,11 +44,15 @@ public enum DiscountPolicy {
   private static int getDiscountRate(Pass pass) {
     Duration passDuration = pass.getDuration();
 
-    return Arrays.stream(DiscountPolicy.values())
-      .filter(discount -> discount.getThresholdDuration().compareTo(passDuration) > 0)
-      .mapToInt(DiscountPolicy::getDiscountRate)
-      .max()
+    Stream<DiscountPolicy> discountPolicyStream = Arrays.stream(DiscountPolicy.values())
+      .filter(discount -> discount.getThresholdDuration().compareTo(passDuration) < 0);
+    IntStream intStream = discountPolicyStream
+      .mapToInt(DiscountPolicy::getDiscountRate);
+    OptionalInt max = intStream
+      .max();
+    int i = max
       .orElse(NONE.getDiscountRate());
+    return i;
   }
 
   private int getDiscountRate() {

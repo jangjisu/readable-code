@@ -3,8 +3,6 @@ package cleancode.studycafe.self.io;
 import cleancode.studycafe.self.discount.DiscountPolicy;
 import cleancode.studycafe.self.pass.LockerPass;
 import cleancode.studycafe.self.pass.Pass;
-import cleancode.studycafe.self.model.StudyCafeLockerPass;
-import cleancode.studycafe.self.model.StudyCafePass;
 
 import java.util.List;
 

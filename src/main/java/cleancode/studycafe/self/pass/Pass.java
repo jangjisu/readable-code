@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static cleancode.studycafe.self.pass.PassType.*;
-import static java.time.Duration.*;
+import static java.time.Duration.ofDays;
+import static java.time.Duration.ofHours;
 
 public enum Pass {
   HOURLY_2("2시간권", HOURLY, ofHours(2), 3_000),
@@ -15,12 +16,12 @@ public enum Pass {
   HOURLY_10("10시간권", WEEKLY, ofHours(10), 12_000),
   HOURLY_12("12시간권", WEEKLY, ofHours(12), 13_000),
   WEEKLY_1("1주일권", WEEKLY, ofDays(7), 60_000),
-  WEEKLY_2("2주일권", WEEKLY, ofDays(7 * 2), 100_000),
-  WEEKLY_3("3주일권", WEEKLY, ofDays(7 * 3), 130_000),
-  WEEKLY_4("4주일권", WEEKLY, ofDays(7 * 4), 150_000),
-  WEEKLY_12("12주일권", WEEKLY, ofDays(7 * 12), 400_000),
-  FIXED_4("고정석 4주권", FIXED, ofDays(7 * 4), 250_000),
-  FIXED_12("고정석 12주권", FIXED, ofDays(7 * 12), 700_000),
+  WEEKLY_2("2주일권", WEEKLY, ofDays(7L * 2), 100_000),
+  WEEKLY_3("3주일권", WEEKLY, ofDays(7L * 3), 130_000),
+  WEEKLY_4("4주일권", WEEKLY, ofDays(7L * 4), 150_000),
+  WEEKLY_12("12주일권", WEEKLY, ofDays(7L * 12), 400_000),
+  FIXED_4("고정석 4주권", FIXED, ofDays(7L * 4), 250_000),
+  FIXED_12("고정석 12주권", FIXED, ofDays(7L * 12), 700_000),
   ;
 
   private final String description;
@@ -55,5 +56,9 @@ public enum Pass {
 
   public int getPrice() {
     return price;
+  }
+
+  public String display() {
+    return String.format("%s - %d원", description, price);
   }
 }
