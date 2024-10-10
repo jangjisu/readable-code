@@ -4,9 +4,7 @@ import cleancode.studycafe.self.pass.Pass;
 
 import java.time.Duration;
 import java.util.Arrays;
-import java.util.OptionalInt;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.List;
 
 public enum DiscountPolicy {
   NONE("할인 없음", 0, Duration.ZERO),
@@ -44,15 +42,16 @@ public enum DiscountPolicy {
   private static int getDiscountRate(Pass pass) {
     Duration passDuration = pass.getDuration();
 
-    Stream<DiscountPolicy> discountPolicyStream = Arrays.stream(DiscountPolicy.values())
-      .filter(discount -> discount.getThresholdDuration().compareTo(passDuration) < 0);
-    IntStream intStream = discountPolicyStream
-      .mapToInt(DiscountPolicy::getDiscountRate);
-    OptionalInt max = intStream
-      .max();
-    int i = max
+    return getExceedThreshholdDurations(passDuration).stream()
+      .mapToInt(DiscountPolicy::getDiscountRate)
+      .max()
       .orElse(NONE.getDiscountRate());
-    return i;
+  }
+
+  private static List<DiscountPolicy> getExceedThreshholdDurations(Duration passDuration) {
+    return Arrays.stream(DiscountPolicy.values())
+      .filter(discount -> discount.getThresholdDuration().compareTo(passDuration) < 0)
+      .toList();
   }
 
   private int getDiscountRate() {
@@ -62,4 +61,5 @@ public enum DiscountPolicy {
   private Duration getThresholdDuration() {
     return thresholdDuration;
   }
+
 }
