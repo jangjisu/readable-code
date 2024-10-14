@@ -47,4 +47,8 @@ public class StudyCafePass {
         return "";
     }
 
+    public boolean isPassCanNotUseLocker() {
+        return passType.isPassTypeCanNotUseLocker();
+    }
+
 }

@@ -10,7 +10,6 @@ public enum StudyCafePassType {
 
   private static final Set<StudyCafePassType> LOCKER_TYPES = Set.of(StudyCafePassType.FIXED);
 
-
   private final String description;
 
   StudyCafePassType(String description) {
