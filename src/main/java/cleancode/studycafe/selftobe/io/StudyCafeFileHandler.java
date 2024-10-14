@@ -1,8 +1,6 @@
 package cleancode.studycafe.selftobe.io;
 
-import cleancode.studycafe.selftobe.model.StudyCafeLockerPass;
-import cleancode.studycafe.selftobe.model.StudyCafePass;
-import cleancode.studycafe.selftobe.model.StudyCafePassType;
+import cleancode.studycafe.selftobe.model.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,7 +13,7 @@ public class StudyCafeFileHandler {
   public static final String PASS_LIST_CSV = "src/main/resources/cleancode/studycafe/pass-list.csv";
   public static final String LOCKER_PASS_LIST_CSV = "src/main/resources/cleancode/studycafe/locker.csv";
 
-  public List<StudyCafePass> readStudyCafePasses() {
+  public StudyCafePasses readStudyCafePasses() {
         try {
             List<String> lines = Files.readAllLines(Paths.get(PASS_LIST_CSV));
             List<StudyCafePass> studyCafePasses = new ArrayList<>();
@@ -30,13 +28,13 @@ public class StudyCafeFileHandler {
                 studyCafePasses.add(studyCafePass);
             }
 
-            return studyCafePasses;
+            return StudyCafePasses.of(studyCafePasses);
         } catch (IOException e) {
             throw new RuntimeException("파일을 읽는데 실패했습니다.", e);
         }
     }
 
-    public List<StudyCafeLockerPass> readLockerPasses() {
+    public StudyCafeLockerPasses readLockerPasses() {
         try {
             List<String> lines = Files.readAllLines(Paths.get(LOCKER_PASS_LIST_CSV));
             List<StudyCafeLockerPass> lockerPasses = new ArrayList<>();
@@ -50,7 +48,7 @@ public class StudyCafeFileHandler {
                 lockerPasses.add(lockerPass);
             }
 
-            return lockerPasses;
+            return StudyCafeLockerPasses.of(lockerPasses);
         } catch (IOException e) {
             throw new RuntimeException("파일을 읽는데 실패했습니다.", e);
         }
