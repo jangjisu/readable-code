@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StudyCafeSeatPassesTest {
+class StudyCafeSeatPassesTest {
   @DisplayName("좌석 이용권들 중, 선택한 이용권 종류에 해당하는 이용권들을 찾을 수 있다.")
   @Test
   void findSpecificPassTypePasses() {

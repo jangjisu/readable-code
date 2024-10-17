@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StudyCafePassOrderTest {
+class StudyCafePassOrderTest {
   @DisplayName("스터디카페 주문내역의 총합 금액을 구할 수 있다.")
   @Test
   void calculateTotalPrice() {

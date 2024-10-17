@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StudyCafeSeatPassTest {
+class StudyCafeSeatPassTest {
 
   @DisplayName("좌석 이용권이 동일한 종류임을 확인할 수 있다.")
   @Test
